@@ -22,3 +22,10 @@ const placeholder = function (word) { //allows function to see the secret word
     wordInProgressElement.innerText = placeholderArray.join("");
 }
 placeholder(word);
+
+guessButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    const inputValueContainer = textInput.value; //get the letter out of the mailbox
+    console.log(inputValueContainer); //show me the letter
+    inputValueContainer.value = ""; //the inbox for tomorrow mail 
+})
