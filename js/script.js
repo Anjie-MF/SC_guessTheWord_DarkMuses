@@ -29,3 +29,17 @@ guessButton.addEventListener("click", function (e) {
     console.log(inputValueContainer); //show me the letter
     inputValueContainer.value = ""; //the inbox for tomorrow mail 
 })
+
+const checkPlayerInput = function (textInput) {
+    const acceptedLetter = /[a-zA-Z]/;
+
+    if (textInput === '') {
+        console.log("You can't leave the offering empty, Mortal.")
+    } else if (textInput.length > 1) {
+        console.log("You can only submit one offering at a time, Mortal.")
+    } else if (textInput.match(/[a-zA-Z]/)) {
+        console.log("Your offering doesn't meet the required standard, Mortal.")
+    } else {
+        return textInput
+    }
+}
