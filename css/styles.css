@@ -34,6 +34,10 @@ h1 {
   text-align: center;
 }
 
+.muse-card {
+  outline: 2px solid purple;
+}
+
 .container {
   background: radial-gradient(50% 50% at 50% 50%,
       rgba(167, 237, 237, 0.3) 0%,
