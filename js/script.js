@@ -2,7 +2,7 @@ const guessedLettersElement = document.querySelector(".guessed-letters"); //UL f
 const guessButton = document.querySelector(".guess");
 const playerGuess = document.querySelector(".letter"); //input box where player types a letter
 const wordInProgressElement = document.querySelector(".word-in-progress"); // display revealed letters/ blanks
-const remainingGuessesContainer = document.querySelector(".remaining"); //container for remaning guesses
+const remainingGuessesContainer = document.querySelector(".remaining"); //container for remaining guesses
 const remainingGuessesSpan = document.querySelector(".remaining span");
 const message = document.querySelector(".message");
 const playAgainButton = document.querySelector(".play-again");
@@ -12,9 +12,12 @@ const playAgainButton = document.querySelector(".play-again");
 // const museNameElement = document.querySelector(".muse-name");
 // const museHintElement = document.querySelector(".muse-hint");
 const word = "grimoire";
+const guessedLetters = []; //bucket for all the LETTERS the player have already guessed
+
+
 
 const placeholder = function (word) { //allows function to see the secret word
-    const placeholderArray = []; //hold the dots aka your basket
+    const placeholderArray = [];
 
     for (const letter of word) {
         console.log(letter);
@@ -32,6 +35,14 @@ guessButton.addEventListener("click", function (e) {
     console.log(inputValueContainer); //show me the letter
     inputValueContainer.value = ""; //clear the mailbox for tomorrow's mail
 
+
+    playerGuess.value = ""; 
+
+    const validatedValue = checkPlayerInput(inputValueContainer); //we have and SAVED the result of the letter insepection
+    if (validatedValue) { //let double check that it is a letter and not say, a number
+        makeGuess(validatedValue); //oh cool, it is a letter, go ahead and give it to makeGuess 
+    }
+
     checkPlayerInput(inputValueContainer);
 })
 
@@ -47,5 +58,17 @@ const checkPlayerInput = function (playerGuess) {
         message.innerText = "Your offering doesn't meet the required standard, Mortal.";
     } else {
         return playerGuess;
+    }
+}
+
+
+const makeGuess = function (guess) {
+    guess = guess.toUpperCase();
+
+    if (guessedLetters.includes(guess)) {
+        message.innerText = "You already given that offering before, Mortal."
+    } else {
+        guessedLetters.push(guess);
+        console.log(guessedLetters);
     }
 }
