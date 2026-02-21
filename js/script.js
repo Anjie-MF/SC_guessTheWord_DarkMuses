@@ -36,7 +36,7 @@ guessButton.addEventListener("click", function (e) {
     inputValueContainer.value = ""; //clear the mailbox for tomorrow's mail
 
 
-    playerGuess.value = ""; 
+    playerGuess.value = "";
 
     const validatedValue = checkPlayerInput(inputValueContainer); //we have and SAVED the result of the letter insepection
     if (validatedValue) { //let double check that it is a letter and not say, a number
@@ -70,5 +70,17 @@ const makeGuess = function (guess) {
     } else {
         guessedLetters.push(guess);
         console.log(guessedLetters);
+        showGuessedLetters();
+    }
+}
+
+
+const showGuessedLetters = function () {
+    guessedLettersElement.innerHTML = "";
+
+    for (const letter of guessedLetters) {
+        const li = document.createElement("li");
+        li.innerText = letter;
+        guessedLettersElement.append(li);
     }
 }
