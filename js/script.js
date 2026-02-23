@@ -6,13 +6,15 @@ const remainingGuessesContainer = document.querySelector(".remaining"); //contai
 const remainingGuessesSpan = document.querySelector(".remaining span");
 const message = document.querySelector(".message");
 const playAgainButton = document.querySelector(".play-again");
+let remainingGuesses = 8;
+const guessedLetters = []; //bucket for all the LETTERS the player have already guessed
+let word = "grimoire";
 // const keyboard = document.querySelector(".keyboard");
 // const museCardContainer = document.querySelector(".muse-card");
 // const museSigilElement = document.querySelector(".muse-sigil");
 // const museNameElement = document.querySelector(".muse-name");
 // const museHintElement = document.querySelector(".muse-hint");
-const word = "grimoire";
-const guessedLetters = []; //bucket for all the LETTERS the player have already guessed
+
 
 
 
@@ -44,14 +46,14 @@ guessButton.addEventListener("click", function (e) {
 
 
 const checkPlayerInput = function (playerGuess) {
-    const acceptedLetter = /[a-zA-Z]/;
+    const acceptedLetter = /^[a-zA-Z]$/;
 
     if (playerGuess === '') {
-        message.innerText = "You can't leave the offering empty, Mortal.";
+        message.innerText = "The Muse waits.";
     } else if (playerGuess.length > 1) {
-        message.innerText = "You can only submit one offering at a time, Mortal.";
+        message.innerText = "One rune at a time.";
     } else if (!playerGuess.match(acceptedLetter)) {
-        message.innerText = "Your offering doesn't meet the required standard, Mortal.";
+        message.innerText = "That is not a rune.";
     } else {
         return playerGuess;
     }
@@ -62,10 +64,11 @@ const makeGuess = function (guess) {
     guess = guess.toUpperCase();
 
     if (guessedLetters.includes(guess)) {
-        message.innerText = "You already given that offering before, Mortal."
+        message.innerText = "Already offered."
     } else {
         guessedLetters.push(guess);
         console.log(guessedLetters);
+        countGuessesRemaining(guess);
         showGuessedLetters();
         updateWIP(guessedLetters);
     }
@@ -99,9 +102,31 @@ const updateWIP = function (guessedLetters) {
     ifPlayerWonGame();
 }
 
+
+const countGuessesRemaining = function (guess) {
+    const wordUpper = word.toUpperCase();
+    if (!wordUpper.includes(guess)) {
+        message.innerText = `No ${guess} answers the call.`;
+        remainingGuesses -= 1;
+    } else {
+        message.innerText = `The sigil warms. Continue...`;
+    }
+    if (remainingGuesses === 0) {
+        message.innerHTML = `The veil closes. The word was <span class="highlight">${word}</span>. Foolish Mortal.`;
+        remainingGuessesSpan.innerText = `${remainingGuesses}`;
+    } else if (remainingGuesses === 1) {
+        remainingGuessesSpan.innerText = `${remainingGuesses}`;
+    } else {
+        remainingGuessesSpan.innerText = `${remainingGuesses}`;
+    }
+};
+
+
 const ifPlayerWonGame = function () {
     if (word.toUpperCase() === wordInProgressElement.innerText) {
         message.classList.add("win");
-        message.innerHTML = `<p class="highlight">The Muse smiles, Mortal.</p>`;
+        message.innerHTML = `<p class="highlight">The Muse smiles.</p>`;
     }
 };
+
+
