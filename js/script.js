@@ -33,8 +33,6 @@ guessButton.addEventListener("click", function (e) {
     message.innerText = "";
     const inputValueContainer = playerGuess.value; //get the letter out of the mailbox
     console.log(inputValueContainer); //show me the letter
-    inputValueContainer.value = ""; //clear the mailbox for tomorrow's mail
-
 
     playerGuess.value = "";
 
@@ -42,8 +40,6 @@ guessButton.addEventListener("click", function (e) {
     if (validatedValue) { //let double check that it is a letter and not say, a number
         makeGuess(validatedValue); //oh cool, it is a letter, go ahead and give it to makeGuess 
     }
-
-    checkPlayerInput(inputValueContainer);
 })
 
 
