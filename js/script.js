@@ -100,5 +100,12 @@ const updateWIP = function (guessedLetters) {
         }
     }
     wordInProgressElement.innerText = updatePlaceholder.join("");
+    ifPlayerWonGame();
 }
 
+const ifPlayerWonGame = function () {
+    if (word.toUpperCase() === wordInProgressElement.innerText) {
+        message.classList.add("win");
+        message.innerHTML = `<p class="highlight">The Muse smiles, Mortal.</p>`;
+    }
+};
