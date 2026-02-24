@@ -1,0 +1,49 @@
+# Witch
+ritual
+cauldron 
+hex 
+incense 
+talisman 
+grimoire 
+sigil 
+potion 
+
+# Siren
+undertow 
+chorus 
+tidepool 
+brine 
+lure 
+peril 
+kelp 
+beacon 
+
+# Ghost
+echo 
+specter 
+shiver 
+lantern 
+ruin 
+veil 
+whisper 
+hollow 
+
+# Vampire 
+nocturne 
+velvet 
+fangs 
+crypt 
+throne 
+hunger 
+eclipse 
+chalice 
+
+# Dark Fae
+glamour 
+thicket 
+mischief 
+bramble 
+oath 
+moonlit 
+trickster 
+wildwood
