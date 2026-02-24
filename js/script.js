@@ -7,7 +7,7 @@ const remainingGuessesSpan = document.querySelector(".remaining span");
 const message = document.querySelector(".message");
 const playAgainButton = document.querySelector(".play-again");
 let remainingGuesses = 8;
-const guessedLetters = []; //bucket for all the LETTERS the player have already guessed
+let guessedLetters = []; //bucket for all the LETTERS the player have already guessed
 let word = "grimoire";
 // const keyboard = document.querySelector(".keyboard");
 // const museCardContainer = document.querySelector(".muse-card");
@@ -31,6 +31,8 @@ const getWord = async function () {
 
     const randomIndex = Math.floor(Math.random() * cleanWordArray.length);
     word = cleanWordArray[randomIndex];
+
+    placeholder(word);
 }
 
 getWord();
@@ -44,22 +46,18 @@ const placeholder = function (word) {
     }
     wordInProgressElement.innerText = placeholderArray.join("");
 }
-placeholder(word);
-
 
 guessButton.addEventListener("click", function (e) {
     e.preventDefault();
     message.innerText = "";
     const inputValueContainer = playerGuess.value;
-    console.log(inputValueContainer);
-
     playerGuess.value = "";
 
     const validatedValue = checkPlayerInput(inputValueContainer);
     if (validatedValue) {
         makeGuess(validatedValue);
     }
-})
+});
 
 
 const checkPlayerInput = function (playerGuess) {
@@ -74,7 +72,7 @@ const checkPlayerInput = function (playerGuess) {
     } else {
         return playerGuess;
     }
-}
+};
 
 
 const makeGuess = function (guess) {
@@ -89,7 +87,7 @@ const makeGuess = function (guess) {
         showGuessedLetters();
         updateWIP(guessedLetters);
     }
-}
+};
 
 
 const showGuessedLetters = function () {
@@ -100,7 +98,7 @@ const showGuessedLetters = function () {
         li.innerText = letter;
         guessedLettersElement.append(li);
     }
-}
+};
 
 
 const updateWIP = function (guessedLetters) {
@@ -117,7 +115,7 @@ const updateWIP = function (guessedLetters) {
     }
     wordInProgressElement.innerText = updatePlaceholder.join("");
     ifPlayerWonGame();
-}
+};
 
 
 const countGuessesRemaining = function (guess) {
@@ -131,6 +129,7 @@ const countGuessesRemaining = function (guess) {
     if (remainingGuesses === 0) {
         message.innerHTML = `The veil closes. The word was <span class="highlight">${word}</span>. Foolish Mortal.`;
         remainingGuessesSpan.innerText = `${remainingGuesses}`;
+        startOver();
     } else if (remainingGuesses === 1) {
         remainingGuessesSpan.innerText = `${remainingGuesses}`;
     } else {
@@ -147,3 +146,25 @@ const ifPlayerWonGame = function () {
 };
 
 
+const startOver = function () {
+    guessButton.classList.add("hide");
+    remainingGuessesContainer.classList.add("hide");
+    guessedLettersElement.classList.add("hide")
+    playAgainButton.classList.remove("hide");
+};
+
+playAgainButton.addEventListener("click", function () {
+    message.classList.remove("win");
+    guessedLetters = [];
+    remainingGuesses = 8;
+    remainingGuessesSpan.innerText = `${remainingGuesses}`;
+    guessedLettersElement.innerHTML = "";
+    message.innerText = "";
+
+    getWord();
+
+    guessButton.classList.remove("hide");
+    playAgainButton.classList.add("hide");
+    remainingGuessesContainer.classList.remove("hide");
+    guessedLettersElement.classList.remove("hide")
+});
