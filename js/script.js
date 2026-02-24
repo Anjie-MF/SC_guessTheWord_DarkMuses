@@ -16,13 +16,30 @@ let word = "grimoire";
 // const museHintElement = document.querySelector(".muse-hint");
 
 
+const getWord = async function () {
+    const response = await fetch("/dark-muses-words.txt");
+    const words = await response.text();
 
+    //split into lines because how i got the doc formatted
+    const wordArray = words.split(/\r?\n/);
 
-const placeholder = function (word) { //allows function to see the secret word
+    //remove headers and blank lines 
+    const cleanWordArray = wordArray
+        .map((line) => line.trim())
+        .filter((line) => line !== "")
+        .filter((line) => !line.startsWith("#"));
+
+    const randomIndex = Math.floor(Math.random() * cleanWordArray.length);
+    word = cleanWordArray[randomIndex];
+}
+
+getWord();
+
+const placeholder = function (word) {
     const placeholderArray = [];
 
     for (const letter of word) {
-        console.log(letter);
+        // console.log(letter);
         placeholderArray.push("🔮");
     }
     wordInProgressElement.innerText = placeholderArray.join("");
@@ -33,14 +50,14 @@ placeholder(word);
 guessButton.addEventListener("click", function (e) {
     e.preventDefault();
     message.innerText = "";
-    const inputValueContainer = playerGuess.value; //get the letter out of the mailbox
-    console.log(inputValueContainer); //show me the letter
+    const inputValueContainer = playerGuess.value;
+    console.log(inputValueContainer);
 
     playerGuess.value = "";
 
-    const validatedValue = checkPlayerInput(inputValueContainer); //we have and SAVED the result of the letter insepection
-    if (validatedValue) { //let double check that it is a letter and not say, a number
-        makeGuess(validatedValue); //oh cool, it is a letter, go ahead and give it to makeGuess 
+    const validatedValue = checkPlayerInput(inputValueContainer);
+    if (validatedValue) {
+        makeGuess(validatedValue);
     }
 })
 
